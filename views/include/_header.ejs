@@ -49,13 +49,18 @@
                   style="background-image: url(./static/avatars/000m.jpg)"
                 ></span>
                 <div class="d-none d-xl-block ps-2">
-                  <div>Precious Kosisochukwu</div>
+                  <% if( authUser) { %>
+                  <div><%= authUser.username %></div>
                   <div class="mt-1 small text-muted">Administrator</div>
+                  <%}%>
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <% if( authUser ){ %>
+                <a href="/auth/logout" class="dropdown-item">Logout</a>
+                <%}else{%>
                 <a href="/auth/login" class="dropdown-item">Login</a>
-                <a href="#" class="dropdown-item">Logout</a>
+                <%}%>
               </div>
             </div>
           </div>

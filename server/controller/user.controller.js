@@ -78,7 +78,6 @@ exports.getRole = async (req, res) => {
 exports.updateRole = async (req, res) => {
   const description = req.body.description;
   const id = req.params.id;
-
   let query = { _id: id };
 
   let model = {

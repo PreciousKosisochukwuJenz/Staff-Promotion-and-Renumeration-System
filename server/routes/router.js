@@ -1,5 +1,6 @@
 const express = require("express");
 const route = express.Router();
+const passport = require("passport");
 
 const services = require("../services/render");
 const AuthCtrl = require("../controller/auth.controller");
@@ -57,6 +58,6 @@ route.put("/api/settings", SettingsCtrl.update);
 
 // Auth
 route.post("/auth/login", AuthCtrl.postLogin);
-route.put("/auth/logout", AuthCtrl.logout);
+route.get("/auth/logout", AuthCtrl.logout);
 
 module.exports = route;

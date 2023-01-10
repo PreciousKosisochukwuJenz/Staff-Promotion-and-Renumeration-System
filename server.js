@@ -36,6 +36,10 @@ app.use(
   })
 );
 
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // express messages middleware
 app.use(require("connect-flash")());
 app.use((request, response, next) => {
@@ -44,10 +48,12 @@ app.use((request, response, next) => {
 });
 
 // passport config
-require("./config/passport")(passport);
-// Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
+require("./server/config/passport")(passport);
+
+app.get("*", (request, response, next) => {
+  response.locals.user = request.user || null;
+  next();
+});
 
 // set view engine
 app.set("view engine", "ejs");

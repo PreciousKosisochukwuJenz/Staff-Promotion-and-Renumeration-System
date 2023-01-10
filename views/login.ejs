@@ -25,13 +25,14 @@
              <div class="hr-text">presented by</div>
           <p><%= settings.poweredBy %></small>
         </div>
-        <form class="card card-md" action="/auth/login" method="POST" autocomplete="off">
+        <form class="card card-md" action="/auth/login" method="POST" id="LoginForm" autocomplete="off">
           <div class="card-body">
             <h2 class="card-title text-center mb-4">Login to your account</h2>
             <div class="mb-3">
               <label class="form-label">Username</label>
               <input
                 type="text"
+                name="username"
                 class="form-control"
                 placeholder="Enter email"
               />
@@ -46,6 +47,7 @@
               <div class="input-group input-group-flat">
                 <input
                   type="password"
+                  name="password"
                   class="form-control"
                   placeholder="Password"
                   autocomplete="off"
@@ -102,5 +104,7 @@
     <script src="/js/tabler.min.js"></script>
     <script src="/js/demo.min.js"></script>
     <script src="/js/index.js"></script>
+    <script>
+    </script>
   </body>
 </html>
