@@ -1,50 +1,43 @@
 const axios = require("axios");
 
-exports.homeRoutes = (req, res) => {
-  // Make a get request to /api/users
-  axios
-    .get("http://localhost:3000/api/users")
-    .then(function (response) {
-      res.render("index", { users: response.data });
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+exports.homeRoutes = async (req, res) => {
+  const settings = await axios.get("http://localhost:3000/api/settings");
+  res.render("index", { settings: settings.data, title: "Home" });
 };
 
-exports.add_user = (req, res) => {
-  res.render("add_user");
+exports.getSettings = async (req, res) => {
+  const settings = await axios.get("http://localhost:3000/api/settings");
+  res.render("settings", { settings: settings.data, title: "Settings" });
 };
 
-exports.update_user = (req, res) => {
-  axios
-    .get("http://localhost:3000/api/users", { params: { id: req.query.id } })
-    .then(function (userdata) {
-      res.render("update_user", { user: userdata.data });
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+exports.updateSettings = async (req, res) => {
+  await axios.put("http://localhost:3000/api/settings");
+  const settings = await axios.get("http://localhost:3000/api/settings");
+
+  res.render("settings", { settings: settings.data, title: "Settings" });
 };
 
-exports.getSettings = (req, res) => {
-  axios
-    .get("http://localhost:3000/api/settings")
-    .then(function (response) {
-      res.render("settings", { data: response });
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+exports.login = async (req, res) => {
+  const settings = await axios.get("http://localhost:3000/api/settings");
+  res.render("login", { settings: settings.data, title: "Login" });
 };
 
-exports.updateSettings = (req, res) => {
-  axios
-    .put("http://localhost:3000/api/settings")
-    .then(function (response) {
-      res.render("settings", { message: response });
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+exports.getUsers = async (req, res) => {
+  const settings = await axios.get("http://localhost:3000/api/settings");
+  const users = await axios.get("http://localhost:3000/api/users");
+  res.render("user", {
+    settings: settings.data,
+    users: users.data.users,
+    title: "Users",
+  });
+};
+
+exports.getRoles = async (req, res) => {
+  const settings = await axios.get("http://localhost:3000/api/settings");
+  const roles = await axios.get("http://localhost:3000/api/roles");
+  res.render("roles", {
+    settings: settings.data,
+    roles: roles.data.roles,
+    title: "Roles",
+  });
 };

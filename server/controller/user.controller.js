@@ -1,108 +1,95 @@
-var Userdb = require("../model/User");
+const User = require("../model/user");
+const Role = require("../model/role");
 
-// create and save new user
-exports.create = (req, res) => {
-  // validate request
-  if (!req.body) {
-    res.status(400).send({ message: "Content can not be emtpy!" });
-    return;
-  }
+const bcrypt = require("bcrypt");
+exports.fetch = async (req, res) => {
+  const users = await User.find({});
+  res.status(200).send({ message: "Request successfully", users });
+};
 
-  // new user
-  const user = new Userdb({
-    name: req.body.name,
-    email: req.body.email,
-    gender: req.body.gender,
-    status: req.body.status,
+exports.create = async (req, res) => {
+  const email = req.body.email;
+  const username = req.body.username;
+  const password = req.body.password;
+  const passwordSalt = req.body.passwordSalt;
+
+  if (password !== passwordSalt)
+    res.status(500).send({ message: "Password does not match" });
+  const salt = await bcrypt.genSalt(10);
+
+  const hash = await bcrypt.hash(password, salt);
+  const newUser = new User({
+    email: email,
+    username: username,
+    password: hash,
   });
-
-  // save user in the database
-  user
-    .save(user)
-    .then((data) => {
-      //res.send(data)
-      res.redirect("/add-user");
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          "Some error occurred while creating a create operation",
-      });
-    });
+  await newUser.save();
+  res.status(201).send({ message: "User added successfully", user: newUser });
 };
 
-// retrieve and return all users/ retrive and return a single user
-exports.find = (req, res) => {
-  if (req.query.id) {
-    const id = req.query.id;
-
-    Userdb.findById(id)
-      .then((data) => {
-        if (!data) {
-          res.status(404).send({ message: "Not found user with id " + id });
-        } else {
-          res.send(data);
-        }
-      })
-      .catch((err) => {
-        res.status(500).send({ message: "Erro retrieving user with id " + id });
-      });
-  } else {
-    Userdb.find()
-      .then((user) => {
-        res.send(user);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message || "Error Occurred while retriving user information",
-        });
-      });
-  }
+exports.get = async (req, res) => {
+  const user = await User.findById(req.params.id).select(["username", "email"]);
+  if (!user) console.error("No user found");
+  res.status(200).send({ message: "Request successfully", user });
 };
 
-// Update a new idetified user by user id
-exports.update = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({ message: "Data to update can not be empty" });
-  }
-
-  const id = req.params.id;
-  Userdb.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot Update user with ${id}. Maybe user not found!`,
-        });
-      } else {
-        res.send(data);
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({ message: "Error Update user information" });
-    });
-};
-
-// Delete a user with specified user id in the request
-exports.delete = (req, res) => {
+exports.update = async (req, res) => {
+  const username = req.body.username;
+  const email = req.body.email;
   const id = req.params.id;
 
-  Userdb.findByIdAndDelete(id)
-    .then((data) => {
-      if (!data) {
-        res
-          .status(404)
-          .send({ message: `Cannot Delete with id ${id}. Maybe id is wrong` });
-      } else {
-        res.send({
-          message: "User was deleted successfully!",
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Could not delete User with id=" + id,
-      });
-    });
+  let query = { _id: id };
+
+  let model = {
+    username: username,
+    email: email,
+  };
+  const user = await User.update(query, model);
+  res.status(200).send({ message: "Request successfully", user });
+};
+
+exports.delete = async (req, res) => {
+  let query = { _id: req.params.id };
+  const user = await User.remove(query);
+  res.status(200).send({ message: "Request successfully", user });
+};
+
+exports.fetchRoles = async (req, res) => {
+  const roles = await Role.find({});
+  res.status(200).send({ message: "Request successfully", roles });
+};
+
+exports.createRole = async (req, res) => {
+  const description = req.body.description;
+
+  const newRole = new Role({
+    description,
+  });
+  await newRole.save();
+  res.status(201).send({ message: "User added successfully", user: newRole });
+};
+
+exports.getRole = async (req, res) => {
+  const role = await Role.findById(req.params.id);
+  if (!role) console.error("No user found");
+  res.status(200).send({ message: "Request successfully", role });
+};
+
+exports.updateRole = async (req, res) => {
+  const description = req.body.description;
+  const id = req.params.id;
+
+  let query = { _id: id };
+
+  let model = {
+    description,
+  };
+  const role = await Role.update(query, model);
+  res.status(200).send({ message: "Request successfully", role });
+};
+
+exports.deleteRole = async (req, res) => {
+  let query = { _id: req.params.id };
+  const role = await Role.remove(query);
+  res.status(200).send({ message: "Request successfully", role });
 };

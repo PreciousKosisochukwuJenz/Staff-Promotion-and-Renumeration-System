@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>STAFF PROMOTION AND RENUMERATION SYSTEM</title>
-
+    <title><%= title %> | <%= settings.appName %></title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
@@ -17,7 +16,7 @@
     <link href="css/tabler-payments.min.css" rel="stylesheet" />
     <link href="css/tabler-vendors.min.css" rel="stylesheet" />
     <link href="css/demo.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
 
   <body>
@@ -35,7 +34,7 @@
           <h1
             class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3"
           >
-            <a href="."> STAFF PROMOTION AND RENUMERATION SYSTEM </a>
+            <a href="."> <%= settings.appName %> </a>
           </h1>
           <div class="navbar-nav flex-row order-md-last">
             <div class="nav-item dropdown">
@@ -55,11 +54,7 @@
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <a href="#" class="dropdown-item">Set status</a>
-                <a href="#" class="dropdown-item">Profile & account</a>
-                <a href="#" class="dropdown-item">Feedback</a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">Settings</a>
+                <a href="/auth/login" class="dropdown-item">Login</a>
                 <a href="#" class="dropdown-item">Logout</a>
               </div>
             </div>
@@ -142,10 +137,8 @@
                         </a>
                       </div>
                       <div class="dropdown-menu-column">
-                        <a class="dropdown-item" href="./empty.html">
-                          Manage User
-                        </a>
-                        <a class="dropdown-item" href="./accordion.html">
+                        <a class="dropdown-item" href="/users"> Manage User </a>
+                        <a class="dropdown-item" href="/roles">
                           Manage Roles
                         </a>
                       </div>
