@@ -1,7 +1,7 @@
 {
-  "name": "user_management",
+  "name": "staff-promotion-system",
   "version": "1.0.0",
-  "description": "Employee Management System- Shramish Project- (Node JS, MongoDB, Express)",
+  "description": "Staff Promotion Management System",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -24,13 +24,5 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7"
   },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shramish2057/Employee-Management-System.git"
-  },
-  "bugs": {
-    "url": "https://github.com/shramish2057/Employee-Management-System/issues"
-  },
-  "homepage": "https://github.com/shramish2057/Employee-Management-System#readme"
+  "devDependencies": {}
 }
