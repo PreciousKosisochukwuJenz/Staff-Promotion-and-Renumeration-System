@@ -7,7 +7,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 
 const path = require("path");
-dotenv.config({ path: "config.env" });
+dotenv.config();
 
 const connectDB = require("./server/database/connection");
 
