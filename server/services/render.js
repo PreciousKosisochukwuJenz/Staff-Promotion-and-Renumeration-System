@@ -38,11 +38,12 @@ exports.login = async (req, res) => {
 exports.getUsers = async (req, res) => {
   const settings = await axios.get("http://localhost:3000/api/settings");
   const users = await axios.get("http://localhost:3000/api/users");
+  const roles = await axios.get("http://localhost:3000/api/roles");
   const authUser = req.user;
-
   res.render("user", {
     settings: settings.data,
     users: users.data.users,
+    roles,
     authUser,
     title: "Users",
   });
@@ -58,5 +59,52 @@ exports.getRoles = async (req, res) => {
     roles: roles.data.roles,
     authUser,
     title: "Roles",
+  });
+};
+
+exports.getStaffs = async (req, res) => {
+  const settings = await axios.get("http://localhost:3000/api/settings");
+  const staffs = await axios.get("http://localhost:3000/api/staffs");
+  const designations = await axios.get(
+    "http://localhost:3000/api/designations"
+  );
+  const authUser = req.user;
+
+  res.render("staffs", {
+    settings: settings.data,
+    staffs: staffs.data.staffs,
+    designations: designations.data.designations,
+    authUser,
+    title: "Staffs",
+  });
+};
+
+exports.getDepartments = async (req, res) => {
+  const settings = await axios.get("http://localhost:3000/api/settings");
+  const departments = await axios.get("http://localhost:3000/api/departments");
+  const authUser = req.user;
+
+  res.render("departments", {
+    settings: settings.data,
+    departments: departments.data.departments,
+    authUser,
+    title: "Departments",
+  });
+};
+
+exports.getDesignations = async (req, res) => {
+  const settings = await axios.get("http://localhost:3000/api/settings");
+  const departments = await axios.get("http://localhost:3000/api/departments");
+  const designations = await axios.get(
+    "http://localhost:3000/api/designations"
+  );
+  const authUser = req.user;
+
+  res.render("designations", {
+    settings: settings.data,
+    departments: departments.data.departments,
+    designations: designations.data.designations,
+    authUser,
+    title: "Designations",
   });
 };

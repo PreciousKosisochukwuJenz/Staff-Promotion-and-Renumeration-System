@@ -15,7 +15,7 @@
         <div class="row align-items-center">
           <div class="col">
             <!-- Page pre-title -->
-            <div class="page-pretitle">Roles</div>
+            <div class="page-pretitle">Departments</div>
             <h2 class="page-title">List</h2>
           </div>
           <!-- Page title actions -->
@@ -25,7 +25,7 @@
                 href="#"
                 class="btn btn-primary d-none d-sm-inline-block"
                 data-bs-toggle="modal"
-                data-bs-target="#create-role-modal"
+                data-bs-target="#create-department-modal"
               >
                 <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                 <svg
@@ -44,7 +44,7 @@
                   <line x1="12" y1="5" x2="12" y2="19" />
                   <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
-                Create new Role
+                Create new department
               </a>
             </div>
           </div>
@@ -56,22 +56,34 @@
             <table class="table table-vcenter table-mobile-md card-table">
               <thead>
                 <tr>
-                  <th>Role</th>
+                  <th>Department</th>
+                  <th>Description</th>
                   <th class="w-1"></th>
                 </tr>
               </thead>
               <tbody>
-                <% for(let role of roles) { %>
+                <% for(let department of departments) { %>
                 <tr>
                   <td data-label="Name">
                     <div class="d-flex py-1 align-items-center">
-                      <span class="avatar me-2"><%= role.abbrev %></span>
+                      <span class="avatar me-2"><%= department.abbrev %></span>
                       <div class="flex-fill">
                         <div class="font-weight-medium">
-                          <%= role.description %>
+                          <%= department.title %>
                         </div>
                         <div class="text-muted">
-                          <a href="#" class="text-reset"><%= role._id %></a>
+                          <a href="#" class="text-reset"
+                            ><%= department._id %></a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td data-label="Name">
+                    <div class="d-flex py-1 align-items-center">
+                      <div class="flex-fill">
+                        <div class="font-weight-medium">
+                          <%= department.description %>
                         </div>
                       </div>
                     </div>
@@ -80,17 +92,17 @@
                     <div class="btn-list flex-nowrap">
                       <a
                         href="#"
-                        data-id="<%= role._id %>"
-                        class="btn btn-primary EditRoleBtn"
+                        data-id="<%= department._id %>"
+                        class="btn btn-primary EditDepartmentBtn"
                         data-bs-toggle="modal"
-                        data-bs-target="#edit-role-modal"
-                        aria-label="Edit Role"
+                        data-bs-target="#edit-department-modal"
+                        aria-label="Edit department"
                       >
                         Edit
                       </a>
                       <a
                         href="#"
-                        data-id="<%= role._id %>"
+                        data-id="<%= department._id %>"
                         class="btn btn-danger"
                         onclick="setId(event)"
                         data-bs-toggle="modal"
@@ -112,15 +124,15 @@
 </div>
 <div
   class="modal modal-blur fade"
-  id="create-role-modal"
+  id="create-department-modal"
   tabindex="-1"
-  role="dialog"
+  department="dialog"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-lg" department="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">New Role</h5>
+        <h5 class="modal-title">New Department</h5>
         <button
           type="button"
           class="btn-close"
@@ -131,6 +143,31 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-lg-12">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <div class="row g-2">
+                <div class="col">
+                  <input
+                    type="text"
+                    name="title"
+                    id="createtitle"
+                    class="form-control"
+                    placeholder="Enter title"
+                  />
+                </div>
+                <div class="col-auto align-self-center">
+                  <span
+                    class="form-help"
+                    data-bs-toggle="popover"
+                    data-bs-placement="top"
+                    data-bs-content="<p>Enter title for department</p> "
+                    data-bs-html="true"
+                    >?</span
+                  >
+                </div>
+              </div>
+            </div>
+
             <div class="mb-3">
               <label class="form-label">Description</label>
               <div class="row g-2">
@@ -148,7 +185,7 @@
                     class="form-help"
                     data-bs-toggle="popover"
                     data-bs-placement="top"
-                    data-bs-content="<p>Enter description for role</p> "
+                    data-bs-content="<p>Enter description for department</p> "
                     data-bs-html="true"
                     >?</span
                   >
@@ -163,7 +200,7 @@
         <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
           Cancel
         </a>
-        <a href="#" class="btn btn-primary ms-auto" id="CreateRoleBtn">
+        <a href="#" class="btn btn-primary ms-auto" id="CreateDepartmentBtn">
           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +218,7 @@
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
-          Create new role
+          Create new department
         </a>
       </div>
     </div>
@@ -189,15 +226,15 @@
 </div>
 <div
   class="modal modal-blur fade"
-  id="edit-role-modal"
+  id="edit-department-modal"
   tabindex="-1"
-  role="dialog"
+  department="dialog"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-lg" department="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Role</h5>
+        <h5 class="modal-title">Edit department</h5>
         <button
           type="button"
           class="btn-close"
@@ -207,9 +244,33 @@
       </div>
 
       <div class="modal-body">
-        <label class="form-label">Bio information</label>
         <div class="row">
           <div class="col-lg-12">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <div class="row g-2">
+                <div class="col">
+                  <input
+                    type="text"
+                    name="title"
+                    id="edittitle"
+                    class="form-control"
+                    placeholder="Enter title"
+                  />
+                </div>
+                <div class="col-auto align-self-center">
+                  <span
+                    class="form-help"
+                    data-bs-toggle="popover"
+                    data-bs-placement="top"
+                    data-bs-content="<p>Enter title for department</p> "
+                    data-bs-html="true"
+                    >?</span
+                  >
+                </div>
+              </div>
+            </div>
+
             <div class="mb-3">
               <label class="form-label">Description</label>
               <div class="row g-2">
@@ -228,7 +289,7 @@
                     class="form-help"
                     data-bs-toggle="popover"
                     data-bs-placement="top"
-                    data-bs-content="<p>Enter description for role</p> "
+                    data-bs-content="<p>Enter description for department</p> "
                     data-bs-html="true"
                     >?</span
                   >
@@ -242,7 +303,7 @@
         <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
           Cancel
         </a>
-        <a href="#" class="btn btn-primary ms-auto" id="UpdateRoleBtn">
+        <a href="#" class="btn btn-primary ms-auto" id="UpdateDepartmentBtn">
           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -271,10 +332,13 @@
   class="modal modal-blur fade"
   id="modal-danger"
   tabindex="-1"
-  role="dialog"
+  department="dialog"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+  <div
+    class="modal-dialog modal-sm modal-dialog-centered"
+    department="document"
+  >
     <div class="modal-content">
       <button
         type="button"
@@ -304,7 +368,9 @@
           />
         </svg>
         <h3>Are you sure?</h3>
-        <div class="text-muted">Do you really want to remove this role?</div>
+        <div class="text-muted">
+          Do you really want to remove this department?
+        </div>
       </div>
       <div class="modal-footer">
         <div class="w-100">
@@ -313,7 +379,7 @@
               <a href="#" class="btn w-100" data-bs-dismiss="modal"> Cancel </a>
             </div>
             <div class="col">
-              <a href="#" class="btn btn-danger w-100 DeleteRoleBtn">
+              <a href="#" class="btn btn-danger w-100 DeleteDepartmentBtn">
                 Remove
               </a>
             </div>

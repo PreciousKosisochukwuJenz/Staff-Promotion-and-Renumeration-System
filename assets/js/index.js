@@ -15,8 +15,7 @@ $("#setting").submit(function (event) {
   };
 
   $.ajax(request).done(function (response) {
-    alert("Settings Updated Successfully!");
-    location.reload();
+    $("#modal-success").modal("show");
   });
 });
 
@@ -35,11 +34,9 @@ $("#CreateUserBtn").click((event) => {
     data: { username, email, password, passwordSalt },
   };
 
-  console.log(request);
-
   $.ajax(request).done(function (response) {
-    alert(response.message);
-    location.reload();
+    $("#modal-title").html(response.message);
+    $("#modal-success").modal("show");
   });
 });
 
@@ -74,27 +71,30 @@ $("#UpdateUserBtn").click((event) => {
   };
 
   $.ajax(request).done(function (response) {
-    alert(response.message);
-    location.reload();
+    $("#modal-title").html(response.message);
+    $("#modal-success").modal("show");
   });
 });
 
+function setId(event) {
+  const id = event.target.dataset.id;
+  $("#modal-danger")[0].dataset.id = id;
+}
 $(".DeleteUserBtn").click((event) => {
   event.preventDefault();
-  const confirmed = confirm("Are you sure?");
-  if (confirmed) {
-    const id = event.target.dataset.id;
 
-    const request = {
-      url: `http://localhost:3000/api/users/${id}`,
-      method: "DELETE",
-    };
+  const id = $("#modal-danger")[0].dataset.id;
 
-    $.ajax(request).done(function (response) {
-      alert(response.message);
-      location.reload();
-    });
-  }
+  const request = {
+    url: `http://localhost:3000/api/users/${id}`,
+    method: "DELETE",
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-danger").modal("hide");
+    $("#modal-success").modal("show");
+  });
 });
 
 $("#CreateRoleBtn").click((event) => {
@@ -106,13 +106,12 @@ $("#CreateRoleBtn").click((event) => {
   const request = {
     url: `http://localhost:3000/api/roles/`,
     method: "POST",
-    contentType: "application/json;charset:utf-8",
     data: { description },
   };
 
   $.ajax(request).done(function (response) {
-    alert(response.message);
-    location.reload();
+    $("#modal-title").html(response.message);
+    $("#modal-success").modal("show");
   });
 });
 
@@ -144,27 +143,281 @@ $("#UpdateRoleBtn").click((event) => {
   };
 
   $.ajax(request).done(function (response) {
-    alert(response.message);
-    location.reload();
+    $("#modal-title").html(response.message);
+    $("#modal-success").modal("show");
   });
 });
 
 $(".DeleteRoleBtn").click((event) => {
   event.preventDefault();
-  const confirmed = confirm("Are you sure?");
-  if (confirmed) {
-    const id = event.target.dataset.id;
 
-    const request = {
-      url: `http://localhost:3000/api/roles/${id}`,
-      method: "DELETE",
-    };
+  const id = $("#modal-danger")[0].dataset.id;
 
-    $.ajax(request).done(function (response) {
-      alert(response.message);
-      location.reload();
+  const request = {
+    url: `http://localhost:3000/api/roles/${id}`,
+    method: "DELETE",
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-danger").modal("hide");
+    $("#modal-success").modal("show");
+  });
+});
+
+$("#CreateStaffBtn").click((event) => {
+  event.preventDefault();
+  let staffType;
+  const prefix = "#create";
+  const classPrefix = ".create";
+  const name = $(prefix + "name").val();
+  const email = $(prefix + "email").val();
+  const designation = $(prefix + "designation").val();
+  const staffTypeProps = $(classPrefix + "staffType");
+  $.each(staffTypeProps, (i, staffTypeProp) => {
+    if (staffTypeProp.checked) staffType = staffTypeProp.value;
+  });
+  const request = {
+    url: `http://localhost:3000/api/staffs/`,
+    method: "POST",
+    data: { name, email, designation, staffType },
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-success").modal("show");
+  });
+});
+
+$(".EditStaffBtn").click((event) => {
+  event.preventDefault();
+  const id = event.target.dataset.id;
+  const request = {
+    url: `http://localhost:3000/api/staffs/${id}`,
+    method: "GET",
+  };
+
+  $.ajax(request).done(function (response) {
+    const prefix = "#edit";
+    const classPrefix = ".edit";
+    $(prefix + "name").val(response.staff.name);
+    $(prefix + "email").val(response.staff.email);
+    $(prefix + "designation").val(response.staff.designation);
+    $(prefix + "id").val(response.staff._id);
+    const staffTypeProps = $(classPrefix + "staffType");
+    $.each(staffTypeProps, (i, staffTypeProp) => {
+      if (staffTypeProp.value === response.staff.staffType)
+        staffTypeProp.checked = true;
     });
-  }
+  });
+});
+
+$("#UpdateStaffBtn").click((event) => {
+  event.preventDefault();
+  let staffType;
+  const id = $("#editid").val();
+  const prefix = "#edit";
+  const classPrefix = ".edit";
+  const name = $(prefix + "name").val();
+  const email = $(prefix + "email").val();
+  const designation = $(prefix + "designation").val();
+  const staffTypeProps = $(classPrefix + "staffType");
+  $.each(staffTypeProps, (i, staffTypeProp) => {
+    if (staffTypeProp.checked) staffType = staffTypeProp.value;
+  });
+
+  const request = {
+    url: `http://localhost:3000/api/staffs/${id}`,
+    method: "PUT",
+    data: { name, email, staffType, designation },
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-success").modal("show");
+  });
+});
+
+$(".DeleteStaffBtn").click((event) => {
+  event.preventDefault();
+
+  const id = $("#modal-danger")[0].dataset.id;
+
+  const request = {
+    url: `http://localhost:3000/api/staffs/${id}`,
+    method: "DELETE",
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-danger").modal("hide");
+    $("#modal-success").modal("show");
+  });
+});
+
+$("#CreateDepartmentBtn").click((event) => {
+  event.preventDefault();
+
+  const prefix = "#create";
+  const title = $(prefix + "title").val();
+  const description = $(prefix + "description").val();
+
+  const request = {
+    url: `http://localhost:3000/api/departments/`,
+    method: "POST",
+    data: { title, description },
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-success").modal("show");
+  });
+});
+
+$(".EditDepartmentBtn").click((event) => {
+  event.preventDefault();
+  const id = event.target.dataset.id;
+  const request = {
+    url: `http://localhost:3000/api/departments/${id}`,
+    method: "GET",
+  };
+
+  $.ajax(request).done(function (response) {
+    const prefix = "#edit";
+    $(prefix + "title").val(response.department.title);
+    $(prefix + "description").val(response.department.description);
+    $(prefix + "id").val(response.department._id);
+  });
+});
+
+$("#UpdateDepartmentBtn").click((event) => {
+  event.preventDefault();
+  const id = $("#editid").val();
+  const prefix = "#edit";
+  const title = $(prefix + "title").val();
+  const description = $(prefix + "description").val();
+
+  const request = {
+    url: `http://localhost:3000/api/departments/${id}`,
+    method: "PUT",
+    data: { title, description },
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-success").modal("show");
+  });
+});
+
+$(".DeleteDepartmentBtn").click((event) => {
+  event.preventDefault();
+
+  const id = $("#modal-danger")[0].dataset.id;
+
+  const request = {
+    url: `http://localhost:3000/api/departments/${id}`,
+    method: "DELETE",
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-danger").modal("hide");
+    $("#modal-success").modal("show");
+  });
+});
+
+$("#CreateDesginationBtn").click((event) => {
+  event.preventDefault();
+  let staffType;
+  const prefix = "#create";
+  const classPrefix = ".create";
+  const title = $(prefix + "title").val();
+  const description = $(prefix + "description").val();
+  const staffTypeProps = $(classPrefix + "staffType");
+  $.each(staffTypeProps, (i, staffTypeProp) => {
+    if (staffTypeProp.checked) staffType = staffTypeProp.value;
+  });
+  const salary = $(prefix + "salary").val();
+  const department = $(prefix + "department").val();
+
+  const request = {
+    url: `http://localhost:3000/api/designations/`,
+    method: "POST",
+    data: { title, description, staffType, salary, department },
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-success").modal("show");
+  });
+});
+
+$(".EditDesignationBtn").click((event) => {
+  event.preventDefault();
+  const id = event.target.dataset.id;
+  const request = {
+    url: `http://localhost:3000/api/designations/${id}`,
+    method: "GET",
+  };
+
+  $.ajax(request).done(function (response) {
+    const prefix = "#edit";
+    const classPrefix = ".edit";
+    $(prefix + "title").val(response.designation.title);
+    $(prefix + "description").val(response.designation.description);
+    const staffTypeProps = $(classPrefix + "staffType");
+    $.each(staffTypeProps, (i, staffTypeProp) => {
+      if (staffTypeProp.value === response.designation.staffType)
+        staffTypeProp.checked = true;
+    });
+    $(prefix + "salary").val(response.designation.salary);
+    $(prefix + "department").val(response.designation.department);
+    $(prefix + "id").val(response.designation._id);
+  });
+});
+
+$("#UpdateDesignationBtn").click((event) => {
+  event.preventDefault();
+  let staffType;
+  const id = $("#editid").val();
+  const prefix = "#edit";
+  const classPrefix = ".edit";
+  const title = $(prefix + "title").val();
+  const description = $(prefix + "description").val();
+  const staffTypeProps = $(classPrefix + "staffType");
+  $.each(staffTypeProps, (i, staffTypeProp) => {
+    if (staffTypeProp.checked) staffType = staffTypeProp.value;
+  });
+  const salary = $(prefix + "salary").val();
+  const department = $(prefix + "department").val();
+
+  const request = {
+    url: `http://localhost:3000/api/designations/${id}`,
+    method: "PUT",
+    data: { title, description, staffType, salary, department },
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-success").modal("show");
+  });
+});
+
+$(".DeleteDesignationBtn").click((event) => {
+  event.preventDefault();
+
+  const id = $("#modal-danger")[0].dataset.id;
+
+  const request = {
+    url: `http://localhost:3000/api/designations/${id}`,
+    method: "DELETE",
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
+    $("#modal-danger").modal("hide");
+    $("#modal-success").modal("show");
+  });
 });
 
 $("#LoginBtn").click(function (event) {

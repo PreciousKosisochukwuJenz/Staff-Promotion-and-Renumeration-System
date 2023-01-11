@@ -1,16 +1,19 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-var schema = new mongoose.Schema({
-    title : {
-        type : String,
-        required: true
+var schema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
     },
-    description : {
-        type: String,
-        required: false,
+    description: {
+      type: String,
+      required: false,
     },
-}, {timestamps:true})
+  },
+  { timestamps: true }
+);
 
-const Department = mongoose.model('Department', schema);
+const Department = mongoose.model("Department", schema);
 
 module.exports = Department;

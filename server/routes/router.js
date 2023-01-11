@@ -5,6 +5,7 @@ const passport = require("passport");
 const services = require("../services/render");
 const AuthCtrl = require("../controller/auth.controller");
 const UserCtrl = require("../controller/user.controller");
+const StaffCtrl = require("../controller/staff.controller");
 const SettingsCtrl = require("../controller/common.controller");
 
 /**
@@ -32,10 +33,28 @@ route.get("/settings", services.getSettings);
 route.get("/users", services.getUsers);
 
 /**
- *  @description user page
- *  @method GET /users
+ *  @description roles page
+ *  @method GET /roles
  */
 route.get("/roles", services.getRoles);
+
+/**
+ *  @description staffs page
+ *  @method GET /staffs
+ */
+route.get("/staffs", services.getStaffs);
+
+/**
+ *  @description Departments page
+ *  @method GET /departments
+ */
+route.get("/departments", services.getDepartments);
+
+/**
+ *  @description Designation page
+ *  @method GET /designations
+ */
+route.get("/designations", services.getDesignations);
 // API
 
 //User
@@ -60,4 +79,24 @@ route.put("/api/settings", SettingsCtrl.update);
 route.post("/auth/login", AuthCtrl.postLogin);
 route.get("/auth/logout", AuthCtrl.logout);
 
+//Staff
+route.get("/api/staffs", StaffCtrl.fetchStaffs);
+route.post("/api/staffs", StaffCtrl.createStaff);
+route.get("/api/staffs/:id", StaffCtrl.getStaff);
+route.put("/api/staffs/:id", StaffCtrl.updateStaff);
+route.delete("/api/staffs/:id", StaffCtrl.deleteStaff);
+
+//Department
+route.get("/api/departments", StaffCtrl.fetchDepartments);
+route.post("/api/departments", StaffCtrl.createDepartment);
+route.get("/api/departments/:id", StaffCtrl.getDepartment);
+route.put("/api/departments/:id", StaffCtrl.updateDepartment);
+route.delete("/api/departments/:id", StaffCtrl.deleteDepartment);
+
+//Designation
+route.get("/api/designations", StaffCtrl.fetchDesignation);
+route.post("/api/designations", StaffCtrl.createDesignation);
+route.get("/api/designations/:id", StaffCtrl.getDesignation);
+route.put("/api/designations/:id", StaffCtrl.updateDesignation);
+route.delete("/api/designations/:id", StaffCtrl.deleteDesignation);
 module.exports = route;
