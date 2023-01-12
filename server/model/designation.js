@@ -23,6 +23,12 @@ var schema = new mongoose.Schema(
       ref: "Department",
       required: true,
     },
+    benefits: [
+      {
+        benefit: String,
+        amount: String,
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -136,12 +136,14 @@ exports.createDesignation = async (req, res) => {
   const salary = req.body.salary;
   const department = req.body.department;
   const staffType = req.body.staffType;
+  const benefits = req.body.benefits;
   const newDesignation = new Designation({
     title,
     description,
     salary,
     department,
     staffType,
+    benefits,
   });
   await newDesignation.save();
   res.status(201).send({
@@ -151,7 +153,8 @@ exports.createDesignation = async (req, res) => {
 };
 
 exports.getDesignation = async (req, res) => {
-  const designation = await Designation.findById(req.params.id);
+  const id = req.params.id;
+  const designation = await Designation.findById(id);
   if (!designation) console.error("No designation found");
   res.status(200).send({ message: "Request successfully", designation });
 };
@@ -162,6 +165,7 @@ exports.updateDesignation = async (req, res) => {
   const salary = req.body.salary;
   const department = req.body.department;
   const staffType = req.body.staffType;
+  const benefits = req.body.benefits;
   const id = req.params.id;
   let query = { _id: id };
 
@@ -171,6 +175,7 @@ exports.updateDesignation = async (req, res) => {
     salary,
     department,
     staffType,
+    benefits,
   };
   const designation = await Designation.updateOne(query, model);
   res.status(200).send({
@@ -186,4 +191,10 @@ exports.deleteDesignation = async (req, res) => {
     message: `Designation with id "${req.params.id}" deleted successfully`,
     designation,
   });
+};
+
+exports.getStaffById = async (req, res) => {
+  const staff = await Staff.findOne({ staffId: req.params.staffId  });
+  if (!staff) console.error("No user found");
+  res.status(200).send({ message: "Request successfully", staff });
 };

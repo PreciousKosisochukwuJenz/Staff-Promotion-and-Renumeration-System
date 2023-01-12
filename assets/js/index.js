@@ -339,11 +339,20 @@ $("#CreateDesginationBtn").click((event) => {
   });
   const salary = $(prefix + "salary").val();
   const department = $(prefix + "department").val();
+  const benetfitsRows = $("#createbenefitTbl")[0].children;
+  let benefits = [];
+  $.each(benetfitsRows, (i, row) => {
+    const benefit =
+      row.children[0].children[0].children[0].children[0].innerText;
+    const amount =
+      row.children[1].children[0].children[0].children[0].innerText;
+    benefits.push({ amount, benefit });
+  });
 
   const request = {
     url: `http://localhost:3000/api/designations/`,
     method: "POST",
-    data: { title, description, staffType, salary, department },
+    data: { title, description, staffType, salary, department, benefits },
   };
 
   $.ajax(request).done(function (response) {
@@ -373,6 +382,32 @@ $(".EditDesignationBtn").click((event) => {
     $(prefix + "salary").val(response.designation.salary);
     $(prefix + "department").val(response.designation.department);
     $(prefix + "id").val(response.designation._id);
+    $.each(response.designation.benefits, (i, benefit) => {
+      const html = `<tr> <td data-label="Name">
+                    <div class="d-flex py-1 align-items-center">
+                      <div class="flex-fill">
+                        <div class="font-weight-medium">
+                        ${benefit.benefit}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                   <div class="d-flex py-1 align-items-center">
+                      <div class="flex-fill">
+                        <div class="font-weight-medium">
+                         ${benefit.amount}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                   <td>
+                     <button class="btn btn-danger deleteBenefit" type="button">Remove </button>
+                  </td>
+                  </tr>`;
+
+      $("#editbenefitTbl").append(html);
+    });
   });
 });
 
@@ -388,13 +423,21 @@ $("#UpdateDesignationBtn").click((event) => {
   $.each(staffTypeProps, (i, staffTypeProp) => {
     if (staffTypeProp.checked) staffType = staffTypeProp.value;
   });
+  const benetfitsRows = $("#editbenefitTbl")[0].children;
+  let benefits = [];
+  $.each(benetfitsRows, (i, row) => {
+    const benefit =
+      row.children[0].children[0].children[0].children[0].innerText;
+    const amount =
+      row.children[1].children[0].children[0].children[0].innerText;
+    benefits.push({ amount, benefit });
+  });
   const salary = $(prefix + "salary").val();
   const department = $(prefix + "department").val();
-
   const request = {
     url: `http://localhost:3000/api/designations/${id}`,
     method: "PUT",
-    data: { title, description, staffType, salary, department },
+    data: { title, description, staffType, salary, department, benefits },
   };
 
   $.ajax(request).done(function (response) {
@@ -424,4 +467,73 @@ $("#LoginBtn").click(function (event) {
   event.preventDefault();
 
   $("#LoginForm").submit();
+});
+
+$(".addBenefit").click(function (e) {
+  const command = e.target.dataset.command;
+  const benefit = $("#" + command + "benefit").val();
+  const amount = $("#" + command + "amount").val();
+
+  if (amount != "" && benefit != "") {
+    const html = `<tr> <td data-label="Name">
+                    <div class="d-flex py-1 align-items-center">
+                      <div class="flex-fill">
+                        <div class="font-weight-medium">
+                        ${benefit}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                   <div class="d-flex py-1 align-items-center">
+                      <div class="flex-fill">
+                        <div class="font-weight-medium">
+                         ₦${amount}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                   <td>
+                     <button class="btn btn-danger deleteBenefit" type="button">Remove </button>
+                  </td>
+                  </tr>`;
+
+    $("#" + command + "benefitTbl").append(html);
+  } else {
+    alert("Benefit and amount must not be empty");
+  }
+});
+
+$(".deleteBenefit").click(function (e) {
+  debugger;
+  const row = e.target.parentNode.parentNode.parentNode;
+});
+
+$("#searchBtn").click(function () {
+  const staffId = $("#staffId").val();
+  debugger;
+  const request = {
+    url: `http://localhost:3000/api/${staffId}`,
+    method: "GET",
+  };
+  $.ajax(request).done(function (response) {
+    $("#currentDesignation").html(response.staff.designation);
+    $("#id").html(response.staff._id);
+  });
+});
+
+$("#promoteBtn").click((event) => {
+  event.preventDefault();
+  const id = $("#id").val();
+  const newDesignation = $("#newDesignation").val();
+  const request = {
+    url: `http://localhost:3000/api/staffs/${id}`,
+    method: "PUT",
+    data: { designation: newDesignation },
+  };
+
+  $.ajax(request).done(function (response) {
+    $("#modal-title").html("Staff Promoted successfully");
+    $("#modal-success").modal("show");
+  });
 });

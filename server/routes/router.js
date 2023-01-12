@@ -55,6 +55,12 @@ route.get("/departments", services.getDepartments);
  *  @method GET /designations
  */
 route.get("/designations", services.getDesignations);
+
+/**
+ *  @description Promotions page
+ *  @method GET /promotions
+ */
+route.get("/promotions", services.getPromotions);
 // API
 
 //User
@@ -83,6 +89,7 @@ route.get("/auth/logout", AuthCtrl.logout);
 route.get("/api/staffs", StaffCtrl.fetchStaffs);
 route.post("/api/staffs", StaffCtrl.createStaff);
 route.get("/api/staffs/:id", StaffCtrl.getStaff);
+route.get("/api/staffs/:staffId", StaffCtrl.getStaffById);
 route.put("/api/staffs/:id", StaffCtrl.updateStaff);
 route.delete("/api/staffs/:id", StaffCtrl.deleteStaff);
 

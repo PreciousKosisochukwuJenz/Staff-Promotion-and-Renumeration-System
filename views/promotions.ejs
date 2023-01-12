@@ -1,0 +1,131 @@
+<!-- include header -->
+<%- include('include/_header') %>
+<!-- /include header -->
+
+<div class="container-xl">
+  <!-- Page title -->
+  <div class="page-header d-print-none">
+    <div class="row align-items-center"></div>
+  </div>
+</div>
+<div class="page-body">
+  <div class="container-xl">
+    <div class="col">
+      <!-- Page pre-title -->
+      <div class="page-pretitle">Staff</div>
+      <h2 class="page-title">Promotions</h2>
+      <hr />
+
+      <form action="/api/staffs" method="PUT" id="promotions">
+        <div class="new_user">
+          <div class="mb-3">
+            <label class="form-label">Staff ID</label>
+            <div class="row g-2">
+              <div class="col">
+                <input
+                  type="text"
+                  name="staffId"
+                  id="staffId"
+                  value="STAFF/"
+                  class="form-control"
+                  placeholder="Enter staff ID"
+                />
+              </div>
+              <div class="col-auto align-self-center">
+                <span
+                  class="form-help"
+                  data-bs-toggle="popover"
+                  data-bs-placement="top"
+                  data-bs-content="<p>Enter the staff id to promote</p> "
+                  data-bs-html="true"
+                  >?</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button
+              type="button"
+              id="searchBtn"
+              class="btn btn-primary btn-block"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </form>
+      <!-- form handling -->
+      <hr />
+      <form action="/api/settings" method="PUT" id="setting">
+        <h3 class="form-label" id="staffNameDisplay"></h3>
+        <div class="new_user">
+          <div class="mb-3">
+            <label class="form-label">Current Designation</label>
+            <div class="row g-2">
+              <div class="col">
+                <select class="form-select" id="currentDesignation">
+                  <option>-- Select Designation --</option>
+                  <% for(let designation of designations){%>
+                  <option value="<%= designation._id %>">
+                    <%= designation.title %>
+                  </option>
+                  <% }%>
+                </select>
+                <input type="hidden" id="id" />
+              </div>
+              <div class="col-auto align-self-center">
+                <span
+                  class="form-help"
+                  data-bs-toggle="popover"
+                  data-bs-placement="top"
+                  data-bs-content="<p>Current staff designation role</p> "
+                  data-bs-html="true"
+                  >?</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">New Designation</label>
+            <div class="row g-2">
+              <div class="col">
+                <select class="form-select" id="newtDesignation">
+                  <option>-- Select Designation --</option>
+                  <% for(let designation of designations){%>
+                  <option value="<%= designation._id %>">
+                    <%= designation.title %>
+                  </option>
+                  <% }%>
+                </select>
+              </div>
+              <div class="col-auto align-self-center">
+                <span
+                  class="form-help"
+                  data-bs-toggle="popover"
+                  data-bs-placement="top"
+                  data-bs-content="<p>Select new designation to promote</p> "
+                  data-bs-html="true"
+                  >?</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button
+              type="button"
+              id="promoteBtn"
+              class="btn btn-primary btn-block"
+            >
+              Promote
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- include footer -->
+<%- include('include/_footer') %>
+<!-- /include footer -->

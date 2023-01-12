@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { Benefits } = require("../model/enums");
 
 exports.homeRoutes = async (req, res) => {
   const settings = await axios.get("http://localhost:3000/api/settings");
@@ -98,13 +99,30 @@ exports.getDesignations = async (req, res) => {
   const designations = await axios.get(
     "http://localhost:3000/api/designations"
   );
+  const benefits = Benefits;
   const authUser = req.user;
 
   res.render("designations", {
     settings: settings.data,
     departments: departments.data.departments,
     designations: designations.data.designations,
+    benefits: Object.values(benefits),
     authUser,
     title: "Designations",
+  });
+};
+
+exports.getPromotions = async (req, res) => {
+  const settings = await axios.get("http://localhost:3000/api/settings");
+  const designations = await axios.get(
+    "http://localhost:3000/api/designations"
+  );
+  const authUser = req.user;
+
+  res.render("promotions", {
+    settings: settings.data,
+    designations: designations.data.designations,
+    authUser,
+    title: "Promotions",
   });
 };
