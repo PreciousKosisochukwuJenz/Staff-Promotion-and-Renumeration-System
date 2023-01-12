@@ -1,4 +1,4 @@
-# STAFF PROMOTION AND RENUMERATION SYSTEm
+# STAFF PROMOTION AND RENUMERATION SYSTEM
 
 A simple staff promotion and renumeration management system application that allows you to manage your employees by adding them, updating their status or deleting them from your system and promote their job statu
 
