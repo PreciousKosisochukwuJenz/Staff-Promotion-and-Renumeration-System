@@ -89,7 +89,8 @@ route.get("/auth/logout", AuthCtrl.logout);
 route.get("/api/staffs", StaffCtrl.fetchStaffs);
 route.post("/api/staffs", StaffCtrl.createStaff);
 route.get("/api/staffs/:id", StaffCtrl.getStaff);
-route.get("/api/staffs/:staffId", StaffCtrl.getStaffById);
+route.post("/api/staffs/byId", StaffCtrl.getStaffById);
+route.put("/api/staffs/promote/:id", StaffCtrl.promoteStaff);
 route.put("/api/staffs/:id", StaffCtrl.updateStaff);
 route.delete("/api/staffs/:id", StaffCtrl.deleteStaff);
 

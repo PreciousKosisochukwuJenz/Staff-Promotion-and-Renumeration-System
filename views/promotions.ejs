@@ -58,7 +58,7 @@
       <!-- form handling -->
       <hr />
       <form action="/api/settings" method="PUT" id="setting">
-        <h3 class="form-label" id="staffNameDisplay"></h3>
+        <h1 id="staffNameDisplay"></h1>
         <div class="new_user">
           <div class="mb-3">
             <label class="form-label">Current Designation</label>
@@ -90,7 +90,7 @@
             <label class="form-label">New Designation</label>
             <div class="row g-2">
               <div class="col">
-                <select class="form-select" id="newtDesignation">
+                <select class="form-select" id="newDesignation">
                   <option>-- Select Designation --</option>
                   <% for(let designation of designations){%>
                   <option value="<%= designation._id %>">

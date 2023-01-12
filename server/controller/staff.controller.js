@@ -51,10 +51,24 @@ exports.updateStaff = async (req, res) => {
     staffType,
     designation,
   };
-  const staff = await Staff.updateOne(query, model);
+  const staff = await Staff.updateOne(query, {
+    $set: model,
+  });
   res
     .status(200)
     .send({ message: `Staff "${name} updated successfully"`, staff });
+};
+exports.promoteStaff = async (req, res) => {
+  console.log(req.body.designation);
+  const designation = req.body.designation;
+  const id = req.params.id;
+  let query = { _id: id };
+
+  let model = {
+    designation,
+  };
+  const staff = await Staff.updateOne(query, model);
+  res.status(200).send({ message: `Staff promoted successfully"`, staff });
 };
 
 exports.deleteStaff = async (req, res) => {
@@ -194,7 +208,7 @@ exports.deleteDesignation = async (req, res) => {
 };
 
 exports.getStaffById = async (req, res) => {
-  const staff = await Staff.findOne({ staffId: req.params.staffId  });
+  const staff = await Staff.findOne({ staffId: req.body.staffId });
   if (!staff) console.error("No user found");
   res.status(200).send({ message: "Request successfully", staff });
 };

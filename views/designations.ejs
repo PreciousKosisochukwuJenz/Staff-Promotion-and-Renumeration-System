@@ -115,7 +115,7 @@
                     <div class="d-flex py-1 align-items-center">
                       <div class="flex-fill">
                         <div class="font-weight-medium">
-                          <%= designation.salary %>
+                          ₦<%= designation.salary %>
                         </div>
                       </div>
                     </div>
@@ -147,10 +147,11 @@
                 </tr>
 
                 <tr>
-                  <td data-label="Name" colspan="5">
+                  <td data-label="Name" colspan="6">
                     <div class="table-responsive">
                       <table
                         class="table table-bordered table-vcenter table-mobile-md card-table"
+                        style="font-size: small"
                       >
                         <thead>
                           <tr>
@@ -169,6 +170,9 @@
                       </table>
                     </div>
                   </td>
+                </tr>
+                <tr>
+                  <td colspan="6"></td>
                 </tr>
                 <% } %>
               </tbody>

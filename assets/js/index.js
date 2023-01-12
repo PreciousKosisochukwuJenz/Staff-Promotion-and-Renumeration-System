@@ -511,14 +511,15 @@ $(".deleteBenefit").click(function (e) {
 
 $("#searchBtn").click(function () {
   const staffId = $("#staffId").val();
-  debugger;
   const request = {
-    url: `http://localhost:3000/api/${staffId}`,
-    method: "GET",
+    url: `http://localhost:3000/api/staffs/byId`,
+    method: "POST",
+    data: { staffId },
   };
   $.ajax(request).done(function (response) {
-    $("#currentDesignation").html(response.staff.designation);
-    $("#id").html(response.staff._id);
+    $("#currentDesignation").val(response.staff.designation);
+    $("#staffNameDisplay").html(response.staff.name);
+    $("#id").val(response.staff._id);
   });
 });
 
@@ -527,13 +528,12 @@ $("#promoteBtn").click((event) => {
   const id = $("#id").val();
   const newDesignation = $("#newDesignation").val();
   const request = {
-    url: `http://localhost:3000/api/staffs/${id}`,
+    url: `http://localhost:3000/api/staffs/promote/${id}`,
     method: "PUT",
     data: { designation: newDesignation },
   };
-
   $.ajax(request).done(function (response) {
-    $("#modal-title").html("Staff Promoted successfully");
+    $("#modal-title").html(response.message);
     $("#modal-success").modal("show");
   });
 });
