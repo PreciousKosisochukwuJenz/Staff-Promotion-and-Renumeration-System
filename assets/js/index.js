@@ -1,4 +1,4 @@
-const url = "https://sprm.herokuapp.com/";
+const url = "https://sprm.herokuapp.com";
 
 $("#setting").submit(function (event) {
   event.preventDefault();
