@@ -1,3 +1,5 @@
+const url = "https://sprm.herokuapp.com/";
+
 $("#setting").submit(function (event) {
   event.preventDefault();
 
@@ -9,12 +11,13 @@ $("#setting").submit(function (event) {
   });
 
   const request = {
-    url: `http://localhost:3000/api/settings`,
+    url: `${url}/api/settings`,
     method: "PUT",
     data: data,
   };
 
   $.ajax(request).done(function (response) {
+    $("#modal-title").html(response.message);
     $("#modal-success").modal("show");
   });
 });
@@ -29,7 +32,7 @@ $("#CreateUserBtn").click((event) => {
   const passwordSalt = $(prefix + "passwordSalt").val();
 
   const request = {
-    url: `http://localhost:3000/api/users/`,
+    url: `${url}/api/users/`,
     method: "POST",
     data: { username, email, password, passwordSalt },
   };
@@ -44,7 +47,7 @@ $(".EditUserBtn").click((event) => {
   event.preventDefault();
   const id = event.target.dataset.id;
   const request = {
-    url: `http://localhost:3000/api/users/${id}`,
+    url: `${url}/api/users/${id}`,
     method: "GET",
   };
 
@@ -65,7 +68,7 @@ $("#UpdateUserBtn").click((event) => {
   const email = $(prefix + "email").val();
 
   const request = {
-    url: `http://localhost:3000/api/users/${id}`,
+    url: `${url}/api/users/${id}`,
     method: "PUT",
     data: { username, email },
   };
@@ -86,7 +89,7 @@ $(".DeleteUserBtn").click((event) => {
   const id = $("#modal-danger")[0].dataset.id;
 
   const request = {
-    url: `http://localhost:3000/api/users/${id}`,
+    url: `${url}/api/users/${id}`,
     method: "DELETE",
   };
 
@@ -104,7 +107,7 @@ $("#CreateRoleBtn").click((event) => {
   const description = $(prefix + "description").val();
 
   const request = {
-    url: `http://localhost:3000/api/roles/`,
+    url: `${url}/api/roles/`,
     method: "POST",
     data: { description },
   };
@@ -119,7 +122,7 @@ $(".EditRoleBtn").click((event) => {
   event.preventDefault();
   const id = event.target.dataset.id;
   const request = {
-    url: `http://localhost:3000/api/roles/${id}`,
+    url: `${url}/api/roles/${id}`,
     method: "GET",
   };
 
@@ -137,7 +140,7 @@ $("#UpdateRoleBtn").click((event) => {
   const description = $(prefix + "description").val();
 
   const request = {
-    url: `http://localhost:3000/api/roles/${id}`,
+    url: `${url}/api/roles/${id}`,
     method: "PUT",
     data: { description },
   };
@@ -154,7 +157,7 @@ $(".DeleteRoleBtn").click((event) => {
   const id = $("#modal-danger")[0].dataset.id;
 
   const request = {
-    url: `http://localhost:3000/api/roles/${id}`,
+    url: `${url}/api/roles/${id}`,
     method: "DELETE",
   };
 
@@ -178,7 +181,7 @@ $("#CreateStaffBtn").click((event) => {
     if (staffTypeProp.checked) staffType = staffTypeProp.value;
   });
   const request = {
-    url: `http://localhost:3000/api/staffs/`,
+    url: `${url}/api/staffs/`,
     method: "POST",
     data: { name, email, designation, staffType },
   };
@@ -193,7 +196,7 @@ $(".EditStaffBtn").click((event) => {
   event.preventDefault();
   const id = event.target.dataset.id;
   const request = {
-    url: `http://localhost:3000/api/staffs/${id}`,
+    url: `${url}/api/staffs/${id}`,
     method: "GET",
   };
 
@@ -227,7 +230,7 @@ $("#UpdateStaffBtn").click((event) => {
   });
 
   const request = {
-    url: `http://localhost:3000/api/staffs/${id}`,
+    url: `${url}/api/staffs/${id}`,
     method: "PUT",
     data: { name, email, staffType, designation },
   };
@@ -244,7 +247,7 @@ $(".DeleteStaffBtn").click((event) => {
   const id = $("#modal-danger")[0].dataset.id;
 
   const request = {
-    url: `http://localhost:3000/api/staffs/${id}`,
+    url: `${url}/api/staffs/${id}`,
     method: "DELETE",
   };
 
@@ -263,7 +266,7 @@ $("#CreateDepartmentBtn").click((event) => {
   const description = $(prefix + "description").val();
 
   const request = {
-    url: `http://localhost:3000/api/departments/`,
+    url: `${url}/api/departments/`,
     method: "POST",
     data: { title, description },
   };
@@ -278,7 +281,7 @@ $(".EditDepartmentBtn").click((event) => {
   event.preventDefault();
   const id = event.target.dataset.id;
   const request = {
-    url: `http://localhost:3000/api/departments/${id}`,
+    url: `${url}/api/departments/${id}`,
     method: "GET",
   };
 
@@ -298,7 +301,7 @@ $("#UpdateDepartmentBtn").click((event) => {
   const description = $(prefix + "description").val();
 
   const request = {
-    url: `http://localhost:3000/api/departments/${id}`,
+    url: `${url}/api/departments/${id}`,
     method: "PUT",
     data: { title, description },
   };
@@ -315,7 +318,7 @@ $(".DeleteDepartmentBtn").click((event) => {
   const id = $("#modal-danger")[0].dataset.id;
 
   const request = {
-    url: `http://localhost:3000/api/departments/${id}`,
+    url: `${url}/api/departments/${id}`,
     method: "DELETE",
   };
 
@@ -350,7 +353,7 @@ $("#CreateDesginationBtn").click((event) => {
   });
 
   const request = {
-    url: `http://localhost:3000/api/designations/`,
+    url: `${url}/api/designations/`,
     method: "POST",
     data: { title, description, staffType, salary, department, benefits },
   };
@@ -365,7 +368,7 @@ $(".EditDesignationBtn").click((event) => {
   event.preventDefault();
   const id = event.target.dataset.id;
   const request = {
-    url: `http://localhost:3000/api/designations/${id}`,
+    url: `${url}/api/designations/${id}`,
     method: "GET",
   };
 
@@ -435,7 +438,7 @@ $("#UpdateDesignationBtn").click((event) => {
   const salary = $(prefix + "salary").val();
   const department = $(prefix + "department").val();
   const request = {
-    url: `http://localhost:3000/api/designations/${id}`,
+    url: `${url}/api/designations/${id}`,
     method: "PUT",
     data: { title, description, staffType, salary, department, benefits },
   };
@@ -452,7 +455,7 @@ $(".DeleteDesignationBtn").click((event) => {
   const id = $("#modal-danger")[0].dataset.id;
 
   const request = {
-    url: `http://localhost:3000/api/designations/${id}`,
+    url: `${url}/api/designations/${id}`,
     method: "DELETE",
   };
 
@@ -512,7 +515,7 @@ $(".deleteBenefit").click(function (e) {
 $("#searchBtn").click(function () {
   const staffId = $("#staffId").val();
   const request = {
-    url: `http://localhost:3000/api/staffs/byId`,
+    url: `${url}/api/staffs/byId`,
     method: "POST",
     data: { staffId },
   };
@@ -528,7 +531,7 @@ $("#promoteBtn").click((event) => {
   const id = $("#id").val();
   const newDesignation = $("#newDesignation").val();
   const request = {
-    url: `http://localhost:3000/api/staffs/promote/${id}`,
+    url: `${url}/api/staffs/promote/${id}`,
     method: "PUT",
     data: { designation: newDesignation },
   };
