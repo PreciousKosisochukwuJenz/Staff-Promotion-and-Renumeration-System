@@ -1,14 +1,15 @@
 const axios = require("axios");
 const { Benefits } = require("../model/enums");
 
+const url = process.env.URL;
 exports.homeRoutes = async (req, res) => {
-  const settings = await axios.get("http://localhost:3000/api/settings");
+  const settings = await axios.get(`${url}/api/settings`);
   const authUser = req.user;
   res.render("index", { settings: settings.data, authUser, title: "Home" });
 };
 
 exports.getSettings = async (req, res) => {
-  const settings = await axios.get("http://localhost:3000/api/settings");
+  const settings = await axios.get(`${url}/api/settings`);
   const authUser = req.user;
   res.render("settings", {
     settings: settings.data,
@@ -18,8 +19,8 @@ exports.getSettings = async (req, res) => {
 };
 
 exports.updateSettings = async (req, res) => {
-  await axios.put("http://localhost:3000/api/settings");
-  const settings = await axios.get("http://localhost:3000/api/settings");
+  await axios.put(`${url}/api/settings`);
+  const settings = await axios.get(`${url}/api/settings`);
   const authUser = req.user;
 
   res.render("settings", {
@@ -30,16 +31,16 @@ exports.updateSettings = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const settings = await axios.get("http://localhost:3000/api/settings");
+  const settings = await axios.get(`${url}/api/settings`);
   const authUser = req.user;
 
   res.render("login", { settings: settings.data, authUser, title: "Login" });
 };
 
 exports.getUsers = async (req, res) => {
-  const settings = await axios.get("http://localhost:3000/api/settings");
-  const users = await axios.get("http://localhost:3000/api/users");
-  const roles = await axios.get("http://localhost:3000/api/roles");
+  const settings = await axios.get(`${url}/api/settings`);
+  const users = await axios.get(`${url}/api/users`);
+  const roles = await axios.get(`${url}/api/roles`);
   const authUser = req.user;
   res.render("user", {
     settings: settings.data,
@@ -51,8 +52,8 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.getRoles = async (req, res) => {
-  const settings = await axios.get("http://localhost:3000/api/settings");
-  const roles = await axios.get("http://localhost:3000/api/roles");
+  const settings = await axios.get(`${url}/api/settings`);
+  const roles = await axios.get(`${url}/api/roles`);
   const authUser = req.user;
 
   res.render("roles", {
@@ -64,11 +65,9 @@ exports.getRoles = async (req, res) => {
 };
 
 exports.getStaffs = async (req, res) => {
-  const settings = await axios.get("http://localhost:3000/api/settings");
-  const staffs = await axios.get("http://localhost:3000/api/staffs");
-  const designations = await axios.get(
-    "http://localhost:3000/api/designations"
-  );
+  const settings = await axios.get(`${url}/api/settings`);
+  const staffs = await axios.get(`${url}/api/staffs`);
+  const designations = await axios.get(`${url}/api/designations`);
   const authUser = req.user;
 
   res.render("staffs", {
@@ -81,8 +80,8 @@ exports.getStaffs = async (req, res) => {
 };
 
 exports.getDepartments = async (req, res) => {
-  const settings = await axios.get("http://localhost:3000/api/settings");
-  const departments = await axios.get("http://localhost:3000/api/departments");
+  const settings = await axios.get(`${url}/api/settings`);
+  const departments = await axios.get(`${url}/api/departments`);
   const authUser = req.user;
 
   res.render("departments", {
@@ -94,11 +93,9 @@ exports.getDepartments = async (req, res) => {
 };
 
 exports.getDesignations = async (req, res) => {
-  const settings = await axios.get("http://localhost:3000/api/settings");
-  const departments = await axios.get("http://localhost:3000/api/departments");
-  const designations = await axios.get(
-    "http://localhost:3000/api/designations"
-  );
+  const settings = await axios.get(`${url}/api/settings`);
+  const departments = await axios.get(`${url}/api/departments`);
+  const designations = await axios.get(`${url}/api/designations`);
   const benefits = Benefits;
   const authUser = req.user;
 
@@ -113,10 +110,8 @@ exports.getDesignations = async (req, res) => {
 };
 
 exports.getPromotions = async (req, res) => {
-  const settings = await axios.get("http://localhost:3000/api/settings");
-  const designations = await axios.get(
-    "http://localhost:3000/api/designations"
-  );
+  const settings = await axios.get(`${url}/api/settings`);
+  const designations = await axios.get(`${url}/api/designations`);
   const authUser = req.user;
 
   res.render("promotions", {
