@@ -1,4 +1,5 @@
 const url = "https://sprm.herokuapp.com";
+// const url = "http://localhost:3000";
 
 $("#setting").submit(function (event) {
   event.preventDefault();
