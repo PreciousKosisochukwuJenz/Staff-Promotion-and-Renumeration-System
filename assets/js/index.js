@@ -541,3 +541,13 @@ $("#promoteBtn").click((event) => {
     $("#modal-success").modal("show");
   });
 });
+
+
+$("#showpassword").click(function(e){
+  var input = e.target.parentNode.parentNode.parentNode.children[0];
+  if(input.type === "password"){
+    input.type = "text";
+  }else{
+    input.type = "password";
+  }
+})
